@@ -2,11 +2,29 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}Hanamokoji{% endblock %}</title>
+
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Hanamokoji</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="{{ path('user_profil') }}">Mon profil<span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="{{ path('nouvelle_partie') }}">Mes parties</a>
+                    <a class="nav-item nav-link" href="{{ path('user_classement') }}">Mon classement</a>
+                </div>
+            </div>
+        </nav>
         {% block body %}{% endblock %}
+
+        <script type="text/javascript" src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

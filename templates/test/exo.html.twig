@@ -1,0 +1,19 @@
+{# templates/page/exo.html.twig #}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Test lien{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+{% block body %}
+
+    <h1>Première page</h1>
+    <a href="{{ path('page_cours') }}">Retour au cours</a>
+
+{% endblock %}
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

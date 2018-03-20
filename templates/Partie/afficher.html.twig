@@ -1,0 +1,43 @@
+{# templates/User/afficher.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Partie n°{{ partie.id }}</h1>
+    <p>Manche {{ partie.partieManche }}</p>
+    <p>Tour : {{ users[partie.partieTour].userPseudo }} joue</p>
+    <p>Carte écartée : {{ objets[partie.partieCarteEcart].id }}</p>
+    <p>Main J1 :
+    {% for cartej1 in partie.partieMainJ1 %}
+        <span style="display: inline;">{{ objets[cartej1].id }}</span>
+    {% endfor %}
+    </p>
+    <p>Actions J1 :
+        Secret({% if partie.partieActionsJ1.secret==1 %}pas utilisé{% else %}utilisé{% endif %})
+        Dissimulation({% if partie.partieActionsJ1.dissimulation==1 %}pas utilisé{% else %}utilisé{% endif %})
+        Cadeau({% if partie.partieActionsJ1.cadeau==1 %}pas utilisé{% else %}utilisé{% endif %})
+        Concurrence({% if partie.partieActionsJ1.concurrence==1 %}pas utilisé{% else %}utilisé{% endif %})
+    </p>
+    <p>Objectifs :
+        {% for objectif in objectifs %}
+            <span style="display: inline;">{{ objectif.id }}(état: {{ attribute(partie.partieObjectifs, objectif.id) }})</span>
+        {% endfor %}
+    </p>
+    <p>Main J2 :
+        {% for cartej2 in partie.partieMainJ2 %}
+            <span style="display: inline;">{{ objets[cartej2].id }}</span>
+        {% endfor %}
+    </p>
+    <p>Actions J2 :
+        Secret({% if partie.partieActionsJ2.secret==1 %}pas utilisé{% else %}utilisé{% endif %})
+        Dissimulation({% if partie.partieActionsJ2.dissimulation==1 %}pas utilisé{% else %}utilisé{% endif %})
+        Cadeau({% if partie.partieActionsJ2.cadeau==1 %}pas utilisé{% else %}utilisé{% endif %})
+        Concurrence({% if partie.partieActionsJ2.concurrence==1 %}pas utilisé{% else %}utilisé{% endif %})
+    </p>
+    <p>Pioche :
+        {% for pioche in partie.partiePioche %}
+            <span style="display: inline;">{{ objets[pioche].id }}</span>
+        {% endfor %}
+    </p>
+
+{% endblock %}
