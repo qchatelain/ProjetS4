@@ -1,0 +1,33 @@
+{# templates/Security/mdp.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Sale Gosse | Mot de passe oublié{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/inscription_connexion.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <div class="formulaires">
+        <img src="{{ asset('assets/images/case12.png') }}" class="image_co_ins" alt="Sale Gosse">
+        <!-- INSCRIPTION -->
+        <p class="titre_co_ins">Mot de passe <br>oublié</p>
+        <form method="post" action="{{ path('mdp') }}" name="user" accept-charset="utf-8" class="inscription">
+
+            <input type="email" placeholder="Adresse mail" title="Adresse mail" name="mail" class="champ" required /><br>
+
+            {% if message == 2 %}
+                <p style="color: white;">Un mail a bien été envoyé avec votre nouveau mot de passe.</p>
+                <p style="color: white;">Pour vous connecter, cliquez juste <a href="{{ path('login') }}">ici</a></p>
+            {% elseif message == 1 %}
+                <p style="color: white;">Aucun utilisateur ne possède cette adresse mail.</p>
+            {% else %}
+                <br>
+            {% endif %}
+            <input style="width: 50%"  type="submit" name="submit" class="submit" value="Récupérer mon mot de passe" />
+
+        </form>
+    </div>
+
+{% endblock %}

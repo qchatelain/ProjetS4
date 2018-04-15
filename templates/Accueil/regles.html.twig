@@ -1,0 +1,136 @@
+{# templates/Accueil/regles.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Sale Gosse | Règles du jeu{% endblock %}
+
+{% block body %}
+    <!-- Présentation -->
+    <div >
+        <!-- <div class="col-md-6 offset-md-3" style="margin-top: 20px; height: 500px; background-color: grey;"></div> -->
+        <div class="row" style="background-color: #e5e6e0;">
+            <div class="presentation col-md-4 offset-1">
+                <p class="titre1">Règles du jeu</p>
+                <br>
+                <p class="texte_gauche">Dans « Sale Gosse », le but du jeu est de conquérir le maximum de lieux importants en récupérant les objets liés à ceux-ci. Mais attention, tous les lieux n’ont pas la même valeur ! Il faudra alterner entre anticipation et coup de bluff afin d’obtenir les objets essentiels tout en laissant de côté les moins intéressants. Soyez le plus malin pour remporter la partie !<br>
+            </div>
+            <div class="col-md-4 offset-1 illustration_droite">
+                <img alt="carte vesro" src="{{ asset('assets/images/verso.png') }}" class="verso_carte">
+            </div>
+        </div>
+        <!-- Accordion -->
+        <ul class="accordion-menu col-md-8">
+            <li>
+                <div class="dropdownlink"><i class="fa fa-gamepad" aria-hidden="true"></i>A propos
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </div>
+                <ul class="submenuItems">
+                    <br><p class="subitem_titre"> Contenu</p>
+                    <p style="margin-left: 10vw" class="chiffre">7</p> cartes de lieu
+                    <p style="text-align: right; margin-top: -70px; margin-right: 10vw;"><span class="chiffre">8</span> jetons d'action</p><br>
+                    <p style="margin-left: 10vw;" class="chiffre">21</p> cartes d'objet
+                    <p style="text-align: right; margin-top: -70px; margin-right: 10vw;"><span class="chiffre">7</span> jetons de victoire</p><br>
+
+                    <span class="underline">But du jeu</span> <br>
+                    • Dans Sal Goss, le but du jeu est de gagner 4 lieux ou 11 (ou plus) points d’équipements. <br>
+                    • Votre adversaire et vous allez jouer chacun votre tour, et vous allez réaliser des actions pour obtenir différentes sortes de cartes d'objet. Pour chaque lieu, si vous avez plus de cartes d'objet que votre adversaire, vous remportez les points d’équipements. <br>
+                    • La partie se poursuit jusqu'à ce qu'un des joueurs ait atteint l'objectif pour remporter la partie lors du décompte des points.<br>
+
+                    <br><p class="subitem_titre">Détails des cartes</p>
+                    <span class="underline">Cartes Lieux</span> <br>
+                    1- Points d’équipements (égaux au nombre de cartes d'objet de la sorte correspondante). <br>
+                    2- Objet correspondant. <br>
+                    • Cartes d'objet <br>
+                    1- Points d’équipements (égaux au nombre de cartes d'objet de la sorte correspondante). <br>
+                    2- Objet correspondant.<br>
+                    <span class="underline">Mise en place du jeu</span> <br>
+                    1. Alignez les 7 cartes de lieu, dans l'ordre suivant de gauche à droite, entre les deux joueurs. <br>
+                    2. Placez 1 jeton de victoire au centre de chaque carte Lieu. <br>
+                    3. Formez une pile avec toutes les cartes d'objet, face cachée, que vous placez à côté de la rangée des cartes lieux. <br>
+                    4. Chaque joueur prend 4 jetons d'action de la même couleur, face colorée visible, et il les place devant lui. <br>
+                    5. Le plus jeune joueur est désigné comme premier joueur.<br>
+
+                    <br><p class="subitem_titre">Séquence de jeu</p>
+                    Le jeu se joue en une ou plusieurs manches. Chaque manche est constituée de trois phases jouées dans l'ordre suivant : <br>
+                    • Phase 1 : Distribuer <br>
+                    • Phase 2 : Action <br>
+                    • Phase 3 : Décompte des points et mise à jour <br>
+                    • Si un joueur atteint l'objectif de victoire lors de la phase de décompte des points, la partie se termine immédiatement. Si aucun des joueurs n'a atteint l'objectif, une nouvelle manche est jouée. La partie se poursuit jusqu'à ce qu'un des joueurs l'emporte.<br>
+
+                </ul>
+            </li>
+            <br>
+            <li>
+                <div class="dropdownlink"><i class="fa fa-battery-quarter" aria-hidden="true"></i>Phase 1
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </div>
+                <ul class="submenuItems">
+                    <p class="subitem_titre">Distribuer </p>
+                    • Le premier joueur mélange les 21 cartes d'objet pour former une pile, face cachée, et il retire au hasard une carte qu'il remet dans la boîte sans la regarder. Cette carte ne sera pas utilisée pendant cette manche. Aucun des joueurs ne peut la regarder. <br>
+                    • Distribuez à chaque joueur 6 cartes d'objet comme main de départ. Les cartes ne doivent pas être montrées à l'adversaire. <br>
+                    • Formez une pile avec les cartes d'objets restantes (« la pioche des objets »), et placez-la à côté de la rangée des espaces à capturer.
+
+                </ul>
+            </li>
+            <br>
+            <li>
+                <div class="dropdownlink"><i class="fa fa-battery-half" aria-hidden="true"></i>Phase 2
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </div>
+                <ul class="submenuItems">
+                    <p class="subitem_titre">Action </p>
+                    • En commençant par le premier joueur, les joueurs vont jouer chacun leur tour (Joueur A → Joueur B → Joueur A → Joueur B → et ainsi de suite) jusqu'à ce que les deux joueurs aient joué 4 tours. <br>
+                    • Lors de votre tour, vous devez piocher une carte de la pioche des objets, et ensuite vous réalisez une action. Il n'y a pas d'ordre fixe pour les actions. <br>
+                    • Lorsque vous réalisez une action, vous choisissez 1 de vos jetons d'action face colorée visible et vous réalisez l'action correspondante. Après avoir résolu l'action, retournez le jeton face cachée. Vous ne pouvez pas choisir de jetons face cachée (chacun des jetons d'action des joueurs ne sera utilisé qu'une seule fois pendant la manche). <br>
+                    • Les 4 actions dans Sal Goss sont : <br>
+                    <br><span class="underline">1 Secret :</span> <br>
+                    • Choisissez 1 carte de votre main, et placez-la face cachée sous le jeton secret. Cette carte sera révélée lors de la phase de décompte des points et elle rapportera des points. <br>
+                    • Vous pouvez regarder cette carte à tout moment dans la partie. <br>
+                    <br><span class="underline">2 Compromis :</span> <br>
+                    • Choisissez 2 cartes de votre main, et placez-les face cachée sous le jeton de compromis. Ces cartes ne rapporteront pas de points lors de cette manche. <br>
+                    • Vous pouvez regarder ces cartes à tout moment pendant la partie. <br>
+                    <br><span class="underline">3 Cadeau :</span> <br>
+                    • Choisissez 3 cartes de votre main, et placez-les face visible devant vous. <br>
+                    • Votre adversaire choisi 1 carte parmi celles-ci et il la place sur son côté de la ligne des lieux, à côté du lieu correspondant. Placez ensuite les 2 cartes de votre côté, à côté des lieux correspondants. Ces cartes rapporteront des points. <br>
+                    <br><span class="underline">4 Concurrence :</span> <br>
+                    • Choisissez 4 cartes de votre main et placez-les face visible devant vous. Vous divisez ces cartes en deux séries comprenant chacune 2 cartes. <br>
+                    • Votre adversaire choisit 1 série et place ces 2 cartes de son côté de la ligne des lieux à côté des lieux correspondants. Placez ensuite les 2 cartes restantes de votre côté, à côté des lieux correspondants. Ces cartes rapporteront des points.<br>
+
+                </ul>
+            </li>
+            <br>
+            <li>
+                <div class="dropdownlink"><i class="fa fa-battery-three-quarters" aria-hidden="true"></i>Phase 3
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </div>
+                <ul class="submenuItems">
+                    <p class="subitem_titre">Décompte des points et mise à jour </p>
+                    • Après que les joueurs ont réalisé leurs 4 actions, le jeu passe à la phase 3. <br>
+                    • Les deux joueurs révèlent la carte qu'ils ont placée sous le jeton secret, et ils placent cette carte de leur côté de la ligne des lieux, à côté du lieu correspondant. Ensuite, comparez le nombre de cartes d'objet de chaque côté de chaque lieu : <br>
+                    • Il y en a plus d'un côté que de l'autre : le côté qui a le plus de cartes d'objet remporte ce lieu. Déplacez le jeton de victoire correspondant sur le côté vainqueur. <br>
+                    • Égalité des deux côtés ou pas de carte : ne déplacez pas le jeton de victoire. <br>
+                    • Après le décompte des points, les joueurs calculent le nombre de lieux qu'ils ont gagné ainsi que la somme des points d’équipements. Si un des joueurs a atteint l'objectif de victoire, la partie se termine immédiatement.<br>
+                    <br><p class="subitem_titre">Si aucun des joueurs n'a atteint l'objectif de victoire, passez à la mise à jour : </p>
+                    • Reprenez TOUTES les cartes d'objet sur la table et dans la boîte, formez une pile face cachée et mettez-la de côté.
+                    • Les jetons de victoire restent à leur place.
+                    • Les deux joueurs retournent leurs jetons d'action face visible.
+                    • Le deuxième joueur devient le nouveau premier joueur.
+                    • Vous êtes prêt pour démarrer la nouvelle manche.
+
+                </ul>
+            </li>
+            <br>
+            <li>
+                <div class="dropdownlink"><i class="fa fa-trophy" aria-hidden="true"></i>Fin de la partie
+                    <i class="fa fa-chevron-down" aria-hidden="true"></i>
+                </div>
+                <ul class="submenuItems">
+                    • Si un joueur a remporté 4 lieux ou 11 (ou plus) points d’équipements, la partie se termine immédiatement. <br>
+                    • Si un seul joueur atteint l'objectif de victoire, il est le vainqueur. <br>
+                    • Si un joueur a remporté 4 lieux et que l'autre a remporté 11 (ou plus) points d’équipements, ce dernier est le vainqueur.<br><br>
+                    <p style="font-style: italic;">Exemple : Le joueur du haut remporte 3 lieux et a un total de 8 points d’équipements. Le joueur du bas a remporté 3 lieux aussi mais avec un total de 11 points d’équipements. Comme le joueur du bas a atteint un objectif de victoire, la partie se termine immédiatement. Le joueur du bas est déclaré vainqueur.</p>
+
+                </ul>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

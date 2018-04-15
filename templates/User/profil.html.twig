@@ -1,7 +1,27 @@
 {# templates/User/profil.html.twig #}
 {% extends 'base.html.twig' %}
 
+{% block title %}Sale Gosse | Jouer une partie{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/inscription_connexion.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h1>Mon profil</h1>
-    <a href="{{ path('partie_nouvelle') }}">Commencerune nouvelle partie</a>
+    <div class="formulaires">
+        <img src="{{ asset('assets/images/case12.png') }}" class="image_co_ins" alt="Sale Gosse">
+        <!-- CONNEXION -->
+        <p class="titre_co_ins">Jouer</p>
+        <form method="post" action="{{ path('creation_partie') }}" class="inscription" accept-charset="utf-8">
+            <br>
+            <select size="4" title="adversaire" name="adversaire">
+                <div class="option">
+                    {% for joueur in joueurs %}
+                        <option value="{{ joueur.id }}">{{ joueur.username }}</option>
+                    {% endfor %}
+                </div>
+            </select><br/><br/>
+            <input type="submit" name="submit" class="submit" value="Combattre"  /><br>
+        </form>
+    </div>
 {% endblock %}

@@ -1,43 +1,262 @@
-{# templates/User/afficher.html.twig #}
 {% extends 'base.html.twig' %}
 
-{% block body %}
+{% block title %}Sale Gosse | Partie{% endblock %}
 
-    <h1>Partie n°{{ partie.id }}</h1>
-    <p>Manche {{ partie.partieManche }}</p>
-    <p>Tour : {{ users[partie.partieTour].userPseudo }} joue</p>
-    <p>Carte écartée : {{ objets[partie.partieCarteEcart].id }}</p>
-    <p>Main J1 :
-    {% for cartej1 in partie.partieMainJ1 %}
-        <span style="display: inline;">{{ objets[cartej1].id }}</span>
-    {% endfor %}
-    </p>
-    <p>Actions J1 :
-        Secret({% if partie.partieActionsJ1.secret==1 %}pas utilisé{% else %}utilisé{% endif %})
-        Dissimulation({% if partie.partieActionsJ1.dissimulation==1 %}pas utilisé{% else %}utilisé{% endif %})
-        Cadeau({% if partie.partieActionsJ1.cadeau==1 %}pas utilisé{% else %}utilisé{% endif %})
-        Concurrence({% if partie.partieActionsJ1.concurrence==1 %}pas utilisé{% else %}utilisé{% endif %})
-    </p>
-    <p>Objectifs :
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/screen3.css') }}">
+{% endblock %}
+
+   {% block body %}
+       <div class="plateau" style="background-image: url({{ asset('assets/images/plateau.png') }});">
+           <img src="{{ asset('assets/images/lance_pierre.png') }}" class="pierre">
+           <img src="{{ asset('assets/images/branche.png') }}" class="branche">
+           <div class="objectif">
+               {% for objectif in objectifs %}
+                   <div class="adverse{{ objectif.id }}">{% if connecte.id == partie.partieJ1.id %}{{ attribute(partie.partieObjectifs, objectif.id).point2 }}{% else %}{{ attribute(partie.partieObjectifs, objectif.id).point1 }}{% endif %}</div>
+               {% endfor %}
+               {% for objectif in objectifs %}
+                   <img src="{{ asset('assets/images/objectifs/'~objectif.objectifImg) }}" class="lieu{{ objectif.id }}" alt="{{ objectif.objectifNom }}">
+                   <img src="{{ asset('assets/images/pions/'~objectif.objectifPion) }}" id="b{{ objectif.id }}" class="bille{{ objectif.id }}" alt="Jeton">
+               {% endfor %}
+               {% for objectif in objectifs %}
+                   <div class="moi{{ objectif.id }}">{% if connecte.id == partie.partieJ1.id %}{{ attribute(partie.partieObjectifs, objectif.id).point1 }}{% else %}{{ attribute(partie.partieObjectifs, objectif.id).point2 }}{% endif %}</div>
+               {% endfor %}
+           </div>
+           <div class="jetons_eux">
+               {% set loop_adv = 4 %}
+               {% for key,value in actionsAdv %}
+                   {% set loop_adv = loop_adv + 1 %}
+                   <img class="jeton_{{ loop_adv }}" src="{{ asset('assets/images/actions/') }}{% if value.etat == 0 %}{{ value.image }}{% else %}{{ value.image2 }}{% endif %}">{% if loop_adv == 6 %}<br>{% endif %}
+               {% endfor %}
+           </div>
+           <div class="affiche_eux">
+               <h3>Points : {{ pointsAdv }}</h3><h3>Objectifs : {{ objsAdv }}</h3>
+           </div>
+           <div class="pioche" style="height: 27vh">
+               {% set loop_pioche = 0 %}
+               {% for carte in partie.partiePioche %}
+                   {% if loop_pioche == 0 or loop_pioche == 1 or loop_pioche == 2 or loop_pioche == 3  %}
+                       <img alt="pioche" class="carte_pioche{% if loop_pioche != 0 %}{{ loop_pioche }}{% endif %}" src="{{ asset('assets/images/objets/Carte_Verso.png') }}">
+                   {% endif %}
+                   {% set loop_pioche = loop_pioche + 1 %}
+               {% endfor %}
+
+           </div>
+           <div id="actions" class="actions {% if action_choisie != 'secret' and action_choisie != 'dissimulation' and action_choisie != 'cadeau' and action_choisie != 'concurrence' %}flex{% endif %}">
+               {% if action_choisie == 'secret' %}
+                   <p style="padding-top: 10px">Choissisez la carte à cacher pour la fin de la manche</p>
+               {% elseif action_choisie == 'dissimulation' %}
+                   <p style="padding-top: 10px">Choissisez 2 cartes à supprimer de votre main</p>
+               {% elseif action_choisie == 'cadeau' %}
+                   <p style="padding-top: 10px">Choissisez 3 cartes à proposer à votre adversaire</p>
+               {% elseif action_choisie == 'concurrence' %}
+                   <p style="padding-top: 10px">Choissisez 4 cartes à proposer à votre adversaire</p>
+               {% elseif choix_cadeau != 0 %}
+                   <p>Choissisez une carte à disposer sur votre plateau</p>
+                   <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                       {% for choix in choix_cadeau %}
+                           <label class="carte_check">
+                               <input type="radio" value="{{ choix.id }}" name="carte_cadeau_choisie">
+                               <img class="cartes" src="{{ asset('assets/images/objets/'~choix.image) }}" alt="" />
+                           </label>
+                       {% endfor %}
+                       <br><input type="submit" class="bouton_petit" value="Valider action">
+                   </form>
+               {% elseif choix_paire != 0 %}
+                   <p>Choissisez une paire à disposer sur votre plateau</p>
+                   <div class="form_conc">
+                       <form style="margin-right: 15px" method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                           {% for choix in choix_paire %}
+                               {% if choix.paire == 1 %}
+                                   <img width="100px" class="cartes" src="{{ asset('assets/images/objets/'~choix.image) }}" alt="" />
+                               {% endif %}
+                           {% endfor %}
+                           <input type="hidden" value="p1" name="choix_paire">
+                           <input type="submit" value="Paire1" class="bouton_petit" style="width: 100px">
+                       </form>
+                       <form style="margin-left: 15px" method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                           {% for choix in choix_paire %}
+                               {% if choix.paire == 2 %}
+                                   <img width="100px" class="cartes" src="{{ asset('assets/images/objets/'~choix.image) }}" alt="" />
+                               {% endif %}
+                           {% endfor %}
+                           <input type="hidden" value="p2" name="choix_paire">
+                           <input type="submit" value="Paire 2" class="bouton_petit" style="width: 100px">
+                       </form>
+                   </div>
+               {% elseif action_dispo[0]['dispo'] == 1 or action_dispo[1]['dispo'] == 1 or action_dispo[2]['dispo'] == 1 or action_dispo[3]['dispo'] == 1 %}
+                   {% if (tour_paire == 0) and (tour_cadeau == 0) %}
+                       <form method="post" action="{{ path('afficher_partie', { 'id': partie.id }) }}">
+                           {% for key,value in mesActions %}
+                               <label class="action">
+                                   <input type="radio" name="action" value="{{ key }}" {% if value.etat == 1 %}disabled{% endif %}{% if connecte.id != partie.partieTour %}disabled{% endif %}/>
+                                   <img src="{{ asset('assets/images/actions/') }}{% if value.etat == 0 %}{{ value.image }}{% else %}{{ value.image2 }}{% endif %}">
+                               </label>
+                           {% endfor %}
+                           <br><input type="submit" value="Valider" class="bouton_petit" />
+                       </form>
+                   {% else %}
+                       <p>Attendez que votre adversaire joue.</p>
+                       <br><a href="{{ path('afficher_partie', {'id': partie.id }) }}"><button class="bouton_petit">Rafraichir</button></a>
+                   {% endif %}
+               {% elseif message != null %}
+                   {% if message == 'Aucun vainqueur' %}
+                       <p style="font-size: 130%">{{ message }}</p>
+                       <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                           <input type="submit" value="Passer à la manche suivante" name="manche_suivante" class="bouton_petit" style="width: 350px">
+                       </form>
+                   {% else %}
+                       <p style="font-size: 130%">{{ message }}</p>
+                       <a href="{{ path('profil') }}"><button class="bouton_petit">Retour à votre profil</button></a>
+                   {% endif %}
+               {% else %}
+                   <p>Vous n'avez pas la main, attendez votre tour pour jouer.</p>
+                   <br><a href="{{ path('afficher_partie', {'id': partie.id }) }}"><button class="bouton_petit">Rafraichir</button></a>
+               {% endif %}
+           </div>
+           <div class="affiche_nous">
+               <h3>Points : {{ mesPoints }}</h3><h3>Objectifs : {{ mesObjs }}</h3>
+           </div>
+           <div class="jetons_nous">
+               {% set loop_moi = 0 %}
+               {% for key,value in mesActions %}
+                   {% set loop_moi = loop_moi + 1 %}
+                   <img class="jeton_{{ loop_moi }}" src="{{ asset('assets/images/actions/') }}{% if value.etat == 0 %}{{ value.image }}{% else %}{{ value.image2 }}{% endif %}">{% if loop_moi == 2 %}<br>{% endif %}
+               {% endfor %}
+
+           </div>
+           <div class="main">
+               {% if action_choisie=='secret' %}
+                   <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                       {% for carte in maMain %}
+                           <label class="carte_check">
+                               <img class="pascheck_sec sec carte{{ loop.index }}" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="{{ carte }}">
+                           </label>
+                       {% endfor %}
+                       <input type="hidden" name="carte_sec_1" id="carte_sec_1" value="">
+                       <br><input type="submit" class="bouton_abs" value="Valider">
+                   </form>
+               {% elseif action_choisie=='dissimulation' %}
+                   <div id="disparition">
+                       <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                           {% for carte in maMain %}
+                               <label class="carte_check">
+                                   <img class="pascheck_diss diss carte{{ loop.index }}" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="{{ carte }}">
+                               </label>
+                           {% endfor %}
+                           <input type="hidden" name="carte_diss_1" id="carte_diss_1" value="">
+                           <input type="hidden" name="carte_diss_2" id="carte_diss_2" value="">
+                           <br><input type="submit" class="bouton_abs" value="Valider">
+                       </form>
+                   </div>
+               {% elseif action_choisie=='cadeau' %}
+                   <div id="cadeau">
+                       <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                           {% for carte in maMain %}
+                               <label class="carte_check">
+                                   <img class="pascheck_cadeau cadeau carte{{ loop.index }}" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="{{ carte }}">
+                               </label>
+                           {% endfor %}
+                           <input type="hidden" name="carte_cadeau_1" id="carte_cadeau_1" value="">
+                           <input type="hidden" name="carte_cadeau_2" id="carte_cadeau_2" value="">
+                           <input type="hidden" name="carte_cadeau_3" id="carte_cadeau_3" value="">
+                           <br><input type="submit" class="bouton_abs" value="Valider">
+                       </form>
+                   </div>
+               {% elseif action_choisie=='concurrence' %}
+                   <div id="concurrence">
+                       <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                           {% for carte in maMain %}
+                               <label class="paire_check">
+                                   <img class="pascheck_conc conc carte{{ loop.index }}" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="{{ carte }}">
+                               </label>
+                           {% endfor %}
+                           <input type="hidden" name="carte_conc_1" id="carte_conc_1" value="">
+                           <input type="hidden" name="carte_conc_2" id="carte_conc_2" value="">
+                           <input type="hidden" name="carte_conc_3" id="carte_conc_3" value="">
+                           <input type="hidden" name="carte_conc_4" id="carte_conc_4" value="">
+                           <br><input type="submit" class="bouton_abs" value="Valider">
+                       </form>
+
+                   </div>
+               {% else %}
+                   {% for carte in maMain %}
+                       <img class="carte{{ loop.index }}" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="carte_main">
+                   {% endfor %}
+               {% endif %}
+           </div>
+           <div class="chat">
+               <div style="height: 83%; padding: 10px; color: white" id="affiche">
+
+               </div>
+               <div class="messages">
+                   <input style="background-color: #d8af85; border-radius: 100px;" type="text" id="phrase" name="phrase" placeholder="Votre message">
+                   <input style="padding-left: 0" type="submit" id="envoi" value="Envoyer" class="bouton_petit">
+               </div>
+           </div>
+           <br>
+           <br>
+       </div>
+
+   {% endblock %}
+{% block footer %}{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('assets/js/animation.js') }}"></script>
+    <script>
+
+    $(document).ready(function () {
+
+
         {% for objectif in objectifs %}
-            <span style="display: inline;">{{ objectif.id }}(état: {{ attribute(partie.partieObjectifs, objectif.id) }})</span>
+        {% if attribute(partie.partieObjectifs, objectif.id).etat == connecte.id %}
+        // Bas
+        $('#b{{ objectif.id }}').removeClass().addClass("bille{{ objectif.id }}_bas");
+        {% elseif attribute(partie.partieObjectifs, objectif.id).etat != 0 %}
+        // Haut
+        $('#b{{ objectif.id }}').removeClass().addClass("bille{{ objectif.id }}_haut");
+        {% endif %}
         {% endfor %}
-    </p>
-    <p>Main J2 :
-        {% for cartej2 in partie.partieMainJ2 %}
-            <span style="display: inline;">{{ objets[cartej2].id }}</span>
-        {% endfor %}
-    </p>
-    <p>Actions J2 :
-        Secret({% if partie.partieActionsJ2.secret==1 %}pas utilisé{% else %}utilisé{% endif %})
-        Dissimulation({% if partie.partieActionsJ2.dissimulation==1 %}pas utilisé{% else %}utilisé{% endif %})
-        Cadeau({% if partie.partieActionsJ2.cadeau==1 %}pas utilisé{% else %}utilisé{% endif %})
-        Concurrence({% if partie.partieActionsJ2.concurrence==1 %}pas utilisé{% else %}utilisé{% endif %})
-    </p>
-    <p>Pioche :
-        {% for pioche in partie.partiePioche %}
-            <span style="display: inline;">{{ objets[pioche].id }}</span>
-        {% endfor %}
-    </p>
+
+
+        function refresh() {
+            $.ajax({
+                url: '{{ path('refresh', {'id': partie.id }) }}',
+                method : "POST",
+                success: function(data) {
+                    var id = '{{ connecte.id }}';
+                    console.log(data);
+                    if(data != id){
+                        {% if action_dispo.0.dispo == 0 and action_dispo.1.dispo == 0 and action_dispo.2.dispo == 0 and action_dispo.3.dispo == 0 and choix_paire == 0 and choix_cadeau == 0 and message == null %}
+                            window.location.reload(true);
+                        {% endif %}
+                    }
+                    if(data == id) {
+                        {% if att_cadeau == 0 or att_paire == 0 and message == null %}
+                            window.location.reload(true);
+                        {% endif %}
+                    }
+                }
+            });
+        }
+        // setInterval(refresh(), 10000);
+
+        window.chat= function () {
+            $('#affiche').load('{{ path('chat') }}');
+        };
+        setInterval( chat , 1000 );
+
+        $('#envoi').click(
+            function dire() {
+                $.ajax({
+                    url: "{{ path('chat') }}",
+                    method: "POST",
+                    data:"message="+ $("#phrase").val(),
+                    success: function () {
+                        $('#phrase').val('');
+                    }
+            });
+        });
+    });
+    </script>
 
 {% endblock %}

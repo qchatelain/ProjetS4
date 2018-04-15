@@ -1,6 +1,36 @@
 {# templates/User/classement.html.twig #}
 {% extends 'base.html.twig' %}
 
+{% block title %}Sale Gosse | Classement{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/statistiques.css') }}">
+{% endblock %}
+
 {% block body %}
-    <h1>Mon classement</h1>
+    <p class="titre">Classement</p>
+    <table class="tab_statistique">
+        <thead>
+            <td>#</td>
+            <td>Pseudo</td>
+            <td>Parties gagnées</td>
+            <td>Ratio V/D</td>
+        </thead>
+        {% if connecte != null %}
+            <tr class="ligne_moi">
+                <td>{{ connecte.place }}</td>
+                <td style="display: inline-flex; flex-direction: row; align-items: center;"><img style="display: block; height: 80px; margin: 5px" src="{{ asset('assets/images/avatar/'~connecte.avatar) }}" alt="avatar"> {{ connecte.pseudo }}</td>
+                <td>{{ connecte.victoire }}</td>
+                <td>{{ connecte.ratio }}</td>
+            </tr>
+        {% endif %}
+        {% for joueur in joueurs %}
+            <tr class="ligne_stat">
+                <td>{{ joueur.place }}</td>
+                <td style="display: inline-flex; flex-direction: row; align-items: center;"><img style="display: block; height: 80px; margin: 5px" src="{{ asset('assets/images/avatar/'~joueur.avatar) }}" alt="avatar"> {{ joueur.pseudo }}</td>
+                <td>{{ joueur.victoire }}</td>
+                <td>{{ joueur.ratio }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

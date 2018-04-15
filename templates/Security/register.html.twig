@@ -1,0 +1,91 @@
+{# templates/Security/register.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Sale Gosse | Inscritpion{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/inscription_connexion.css') }}">
+{% endblock %}
+
+{% block body %}
+    <style>
+        .actif {
+            border: 1px white solid;
+        }
+    </style>
+    <div class="formulaires">
+        <img src="{{ asset('assets/images/case12.png') }}" class="image_co_ins" alt="Sale Gosse">
+        <!-- INSCRIPTION -->
+        <p class="titre_co_ins">Inscription</p>
+        <form method="post" name="user" accept-charset="utf-8" class="inscription">
+            {{ form_errors(form) }}
+
+            <!-- <label class="titre_champ">Prénom : </label><br/> -->
+            <input type="text" placeholder="Prénom" name="user[userPrenom]" class="champ" required />
+            <br/><br/>
+
+            <!-- <label class="titre_champ">Nom : </label><br/> -->
+            <input type="text" placeholder="Nom" name="user[userNom]" required class="champ" value=""  />
+            <br><br/>
+
+            <!-- <label class="titre_champ">Pseudo : </label><br/> -->
+            <input type="text" placeholder="Pseudo" name="user[username]" class="champ" required />
+            <div class='error_msg'>
+                {{ form_errors(form.username) }}
+            </div><br/>
+
+            <!-- <label class="titre_champ">Adresse Mail : </label><br/> -->
+            <input type="email" placeholder="Adresse Mail" name="user[email]" class="champ" required />
+            <div class='error_msg'>
+                {{ form_errors(form.email) }}
+            </div><br/>
+
+            <!-- <label class="titre_champ">Mot de Passe : </label><br/> -->
+            <input type="password" placeholder="Mot de passe" name="user[password][first]" class="champ" required />
+            <div class='error_msg'>
+                {{ form_errors(form.password.first) }}
+            </div><br/>
+
+            <!-- <label class="titre_champ">Confirmez votre Mot de Passe : </label><br/> -->
+            <input type="password" placeholder="Confirmation mot de passe" name="user[password][second]" class="champ" required  />
+            <div class='error_msg'>
+                {{ form_errors(form.password.second) }}
+            </div><br/>
+
+            <label for="avatar1"><img src="{{ asset('assets/images/avatar/avatar1.png') }}" class="avatar pascheck actif" alt="avatar1.png"></label>
+            <label for="avatar2"><img src="{{ asset('assets/images/avatar/avatar2.png') }}" class="avatar pascheck" alt="avatar2.png"></label>
+            <label for="avatar3"><img src="{{ asset('assets/images/avatar/avatar3.png') }}" class="avatar pascheck" alt="avatar3.png"></label>
+            <label for="avatar4"><img src="{{ asset('assets/images/avatar/avatar4.png') }}" class="avatar pascheck" alt="avatar4.png"></label>
+            <input type="hidden" name="user[userAvatar]" value="avatar1.png" id="check_avatar">
+
+            <input type="submit" name="submit" class="submit" value="S'inscrire"  />
+            <input type="hidden" name="user[_token]" value="{{ form._token.vars.value }}" />
+        </form>
+        <a href="{{ path('login') }}" class="lien_inscrit">Déjà inscrit ?</a>
+    </div>
+{% endblock %}
+{% block javascripts %}
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('.avatar').click(function () {
+                var actif = document.getElementsByClassName("actif");
+                $(actif).removeClass("actif");
+
+                $(this).addClass("actif");
+                var id = $(".actif").attr("alt");
+                if ($(".actif").hasClass("pascheck")) {
+                        $("#check_avatar").val(id);
+                        $(".actif").removeClass("pascheck").addClass("check");
+                } else if ($(".actif").hasClass("check")) {
+                        $("#check_avatar").val("");
+                        $(".actif").removeClass("check").addClass("pascheck");
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

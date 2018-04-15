@@ -1,0 +1,112 @@
+.row {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+p {
+    margin: 0;
+}
+
+.objectifs {
+    display: inline-block;
+    width: 125px;
+    position: relative;
+}
+
+.objectifs > img {
+    display: block;
+    width: 100%;
+}
+
+.jeton {
+    display: block;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+}
+
+.jeton img {
+    display: block;
+    width: 100%;
+}
+
+.jeton_nul {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.jeton_j1 {
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+}
+
+.jeton_j2 {
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 50%);
+}
+
+.col_gauche {
+    width: 20%;
+    position: relative;
+}
+
+.col_droite {
+    width: 80%;
+    position: relative;
+}
+
+.pioche {
+    width: 100%;
+}
+
+.carte_pioche {
+    display: block;
+    margin: auto;
+    width: 125px;
+}
+
+.actions {
+    height: 300px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.actions > form >input {
+    margin: auto;
+    display: block;
+}
+
+.action > input, .carte_check > input{ /* HIDE RADIO */
+    visibility: hidden;
+    position: absolute;
+}
+
+.action > input + img, .carte_check > input + img{ /* IMAGE STYLES */
+    cursor: pointer;
+    border: 2px solid transparent;
+    display: block;
+    width: 100px;
+}
+
+.action > input:checked + img, .carte_check > input:checked + img{ /* (RADIO CHECKED) IMAGE STYLES */
+    border: 2px solid #f00;
+}
+
+.main {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.cartes {
+    display: inline-block;
+    width: 125px;
+    margin-left: 10px;
+}

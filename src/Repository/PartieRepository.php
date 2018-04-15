@@ -31,4 +31,26 @@ class PartieRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findWhereCours($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.partieJ1 = :value')
+            ->orWhere('u.partieJ2 = :value')
+            ->andWhere('u.partieVainqueur = 0')
+            ->setParameter('value', $value)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findWhereFinish($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.partieJ1 = :value')
+            ->orWhere('u.partieJ2 = :value')
+            ->andWhere('u.partieVainqueur != 0')
+            ->setParameter('value', $value)
+            ->getQuery()
+            ->getResult();
+    }
 }

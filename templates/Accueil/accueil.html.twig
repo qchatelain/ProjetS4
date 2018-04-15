@@ -1,0 +1,19 @@
+{# templates/Accueil/accueil.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <div class="container" style="height: 60vh">
+        <div class="row" style="height: 100%">
+            <div class="col-1"></div>
+            <div class="col-5 d-flex flex-column align-items-center justify-content-center">
+                <a style="margin-bottom: 10px" href="{{ path('login') }}"><button class="bouton">Connexion</button></a>
+                <a style="margin-top: 10px" href="{{ path('register') }}"><button class="bouton">Inscription</button></a>
+            </div>
+            <div class="col-5 d-flex flex-column align-items-center justify-content-center">
+                <img class="img_accueil" src="{{ asset('assets/images/logo.png') }}" alt="Sale gosse">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

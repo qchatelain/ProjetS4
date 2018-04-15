@@ -1,0 +1,284 @@
+{% extends 'base_partie.html.twig' %}
+
+   {% block body %}
+       <div class="plateau">
+           <img src="{{ asset('assets/images/lance_pierre.png') }}" class="pierre">
+           <img src="{{ asset('assets/images/branche.png') }}" class="branche">
+           <div class="objectif">
+               {% for objectif in objectifs %}
+                   <div class="objectifs text-center">
+                       <p>{% if connecte.id == partie.partieJ1.id %}{{ attribute(partie.partieObjectifs, objectif.id).point2 }}{% else %}{{ attribute(partie.partieObjectifs, objectif.id).point1 }}{% endif %}</p>
+                       <img src="{{ asset('assets/images/objectifs/'~objectif.objectifImg) }}" alt="{{ objectif.objectifNom }}">
+                       {% if attribute(partie.partieObjectifs, objectif.id).etat == connecte.id %}
+                           <div class="jeton jeton_j1">
+                               <img src="{{ asset('assets/images/pions/'~objectif.objectifPion) }}" alt="Jeton">
+                           </div>
+                       {% elseif attribute(partie.partieObjectifs, objectif.id).etat == 0 %}
+                           <div class="jeton jeton_nul">
+                               <img src="{{ asset('assets/images/pions/'~objectif.objectifPion) }}" alt="Jeton">
+                           </div>
+                       {% else %}
+                           <div class="jeton jeton_j2">
+                               <img src="{{ asset('assets/images/pions/'~objectif.objectifPion) }}" alt="Jeton">
+                           </div>
+                       {% endif %}
+                       <p>{% if connecte.id == partie.partieJ1.id %}{{ attribute(partie.partieObjectifs, objectif.id).point1 }}{% else %}{{ attribute(partie.partieObjectifs, objectif.id).point2 }}{% endif %}</p>
+                   </div>
+               {% endfor %}
+               <img src="img/carte2_lieu1.png" class="lieu1">
+               <img src="img/bille_bleue.png" class="bille1">
+               <img src="img/carte2_lieu2.png" class="lieu2">
+               <img src="img/bille_marron.png" class="bille2">
+               <img src="img/carte2_lieu3.png" class="lieu3">
+               <img src="img/bille_beige.png" class="bille3">
+               <img src="img/carte3_lieu1.png" class="lieu4">
+               <img src="img/bille_orange.png" class="bille4">
+               <img src="img/carte3_lieu2.png" class="lieu5">
+               <img src="img/bille_violette.png" class="bille5">
+               <img src="img/carte4_lieu.png" class="lieu6">
+               <img src="img/bille_verte.png" class="bille6">
+               <img src="img/carte5_lieu.png" class="lieu7">
+               <img src="img/bille_rose.png" class="bille7">
+           </div>
+           <div class="jetons_eux">
+               <img src="img/Jetons5.png" class="jeton_5">
+               <img src="img/Jetons6.png" class="jeton_6"><br>
+               <img src="img/Jetons7.png" class="jeton_7">
+               <img src="img/Jetons8.png" class="jeton_8">
+           </div>
+           <div class="pioche">
+               <img src="img/carte_verso.png" class="carte_pioche">
+               <img src="img/carte_verso.png" class="carte_pioche1">
+               <img src="img/carte_verso.png" class="carte_pioche2">
+               <img src="img/carte_verso.png" class="carte_pioche3">
+           </div>
+           <div class="action">
+
+           </div>
+           <div class="jetons_nous">
+               <img src="img/Jetons1.png" class="jeton_1">
+               <img src="img/Jetons2.png" class="jeton_2"><br>
+               <img src="img/Jetons3.png" class="jeton_3">
+               <img src="img/Jetons4.png" class="jeton_4">
+           </div>
+           <div class="main">
+               <img src="img/Carte2_Objet3.png" class="carte1">
+               <img src="img/Carte3_Objet2.png" class="carte2">
+               <img src="img/Carte5_Objet3.png" class="carte3">
+               <img src="img/Carte3_Objet4.png" class="carte4">
+               <img src="img/Carte4_Objet3.png" class="carte5">
+               <img src="img/carte2_objet1.png" class="carte6">
+               <img src="img/Carte2_Objet5.png" class="carte7">
+           </div>
+           <div class="chat">
+               <div class="messages">
+                   <input type="" name="" placeholder="Envoyez votre message">
+               </div>
+           </div>
+       </div>
+       <div class="container-fluid" id="plateau">
+
+       <div class="row justify-content-between">
+           {% for objectif in objectifs %}
+               <div class="objectifs text-center">
+                   <p>{% if connecte.id == partie.partieJ1.id %}{{ attribute(partie.partieObjectifs, objectif.id).point2 }}{% else %}{{ attribute(partie.partieObjectifs, objectif.id).point1 }}{% endif %}</p>
+                   <img src="{{ asset('assets/images/objectifs/'~objectif.objectifImg) }}" alt="{{ objectif.objectifNom }}">
+                   {% if attribute(partie.partieObjectifs, objectif.id).etat == connecte.id %}
+                       <div class="jeton jeton_j1">
+                           <img src="{{ asset('assets/images/pions/'~objectif.objectifPion) }}" alt="Jeton">
+                       </div>
+                   {% elseif attribute(partie.partieObjectifs, objectif.id).etat == 0 %}
+                       <div class="jeton jeton_nul">
+                           <img src="{{ asset('assets/images/pions/'~objectif.objectifPion) }}" alt="Jeton">
+                       </div>
+                   {% else %}
+                       <div class="jeton jeton_j2">
+                           <img src="{{ asset('assets/images/pions/'~objectif.objectifPion) }}" alt="Jeton">
+                       </div>
+                   {% endif %}
+                   <p>{% if connecte.id == partie.partieJ1.id %}{{ attribute(partie.partieObjectifs, objectif.id).point1 }}{% else %}{{ attribute(partie.partieObjectifs, objectif.id).point2 }}{% endif %}</p>
+               </div>
+           {% endfor %}
+       </div>
+
+       <div class="row" id="jeu2">
+           <div class="col-2" id="actions">
+
+           </div>
+           <div id="action_principale" class="col-10 jumbotron" style="text-align:center;">
+               {% if action_choisie == 'secret' %}
+                   <p>Choissisez la carte à cacher pour la fin de la manche</p>
+               {% elseif action_choisie == 'dissimulation' %}
+                   <p>Choissisez 2 cartes à supprimer de votre main</p>
+               {% elseif action_choisie == 'cadeau' %}
+                   <p>Choissisez 3 cartes à proposer à votre adversaire</p>
+               {% elseif action_choisie == 'concurrence' %}
+                   <p>Choissisez 4 cartes à proposer à votre adversaire</p>
+               {% elseif choix_cadeau != 0 %}
+                   <p>Choissisez une carte à disposer sur votre plateau</p>
+                   <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                       {% for choix in choix_cadeau %}
+                           <label class="carte_check">
+                               <input type="radio" value="{{ choix.id }}" name="carte_cadeau_choisie">
+                               <img class="cartes" src="{{ asset('assets/images/objets/'~choix.image) }}" alt="" />
+                           </label>
+                       {% endfor %}
+                       <br><input type="submit" class="btn btn-primary" value="Valider action">
+                   </form>
+               {% elseif choix_paire != 0 %}
+                   <p>Choissisez une paire à disposer sur votre plateau</p>
+                   <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                       {% for choix in choix_paire %}
+                           {% if choix.paire == 1 %}
+                               <img class="cartes" src="{{ asset('assets/images/objets/'~choix.image) }}" alt="" />
+                           {% endif %}
+                       {% endfor %}
+                       <input type="hidden" value="p1" name="choix_paire">
+                       <input type="submit" value="Paire1" class="btn btn-primary">
+                   </form>
+                   <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                       {% for choix in choix_paire %}
+                           {% if choix.paire == 2 %}
+                               <img class="cartes" src="{{ asset('assets/images/objets/'~choix.image) }}" alt="" />
+                           {% endif %}
+                       {% endfor %}
+                       <input type="hidden" value="p2" name="choix_paire">
+                       <input type="submit" value="Paire 2" class="btn btn-primary">
+                   </form>
+               {% elseif action_dispo[0]['dispo'] == 1 or action_dispo[1]['dispo'] == 1 or action_dispo[2]['dispo'] == 1 or action_dispo[3]['dispo'] == 1 %}
+                   {% if (tour_paire == 0) and (tour_cadeau == 0) %}
+                       <form method="post" action="{{ path('afficher_partie', { 'id': partie.id }) }}">
+                           {% for key,value in mesActions %}
+                               <label class="action">
+                                   <input type="radio" name="action" value="{{ key }}" {% if value.etat == 1 %}disabled{% endif %}{% if connecte.id != partie.partieTour %}disabled{% endif %}/>
+                                   <img src="{{ asset('assets/images/actions/') }}{% if value.etat == 0 %}{{ value.image }}{% else %}{{ value.image2 }}{% endif %}">
+                               </label>
+                           {% endfor %}
+                           <br><input type="submit" value="Valider" />
+                       </form>
+                   {% else %}
+                       <p>Attendez que votre adversaire joue.</p>
+                   {% endif %}
+               {% elseif message != null %}
+                       {% if message == 'Aucun vainqueur' %}
+                           <p>{{ message }}</p>
+                           <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                               <input type="submit" value="Passer à la manche suivante" name="manche_suivante" class="btn btn-primary">
+                           </form>
+                       {% else %}
+                           <p>{{ message }}</p>
+                           <a href="{{ path('profil') }}">Retour à votre profil</a>
+                       {% endif %}
+               {% else %}
+                   <p>Vous n'avez pas la main, attendez votre tour pour jouer.</p>
+               {% endif %}
+
+           </div>
+       </div>
+       <div class="row">
+           <div class="col-2">
+               <img class="carte_pioche" src="{{ asset('assets/images/objets/Carte_Verso.png') }}" alt="Pioche" />
+           </div>
+       </div>
+
+       <div class="row">
+           <div class="col-2">
+               <span>Carte cachée : {{ carte_secret }} </span><br>
+               <span>Cartes dissimulées :
+                   {% for carte in cartes_dissimulees %}
+                       {{ carte }}
+                   {% endfor %}
+                </span><br>
+           </div>
+           <div id="main" class="col-10" style="text-align:center;">
+               {% if action_choisie=='secret' %}
+                   <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                       {% for carte in maMain %}
+                           <label class="carte_check">
+                               <input type="radio" value="{{ objets[carte].id }}" name="carte_secret_select">
+                               <img class="cartes" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="" />
+                           </label>
+                       {% endfor %}
+                       <br><input type="submit" class="btn btn-primary" value="Valider">
+                   </form>
+               {% elseif action_choisie=='dissimulation' %}
+                   <div id="disparition">
+                       <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                           {% for carte in maMain %}
+                               <label class="carte_check">
+                                   <input type="checkbox" value="{{ objets[carte].id }}" name="cartes_diss_select[]">
+                                   <img class="cartes" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="" />
+                               </label>
+                           {% endfor %}
+                           <br><input type="submit" class="btn btn-primary" value="Valider">
+                       </form>
+                   </div>
+               {% elseif action_choisie=='cadeau' %}
+                   <div id="cadeau">
+                       <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                           {% for carte in maMain %}
+                               <label class="carte_check">
+                                   <input type="checkbox" value="{{ objets[carte].id }}" name="cartes_cadeau[]">
+                                   <img class="cartes" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="" />
+                               </label>
+                           {% endfor %}
+                           <br><input type="submit" class="btn btn-primary" value="Valider">
+                       </form>
+                   </div>
+               {% elseif action_choisie=='concurrence' %}
+                   <div id="concurrence">
+                       <form method="post" action="{{ path('afficher_partie', {'id': partie.id }) }}">
+                           {% for carte in maMain %}
+                               <label class="paire_check">
+                                   <img class="cartes" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="" />
+                                   <label>Paire 1 :</label><input class="max2" type="checkbox" name="paire1_concurrence[]" value="{{ objets[carte].id }}"/>
+                                   <label>Paire 2 :</label><input class="max2" type="checkbox" name="paire2_concurrence[]" value="{{ objets[carte].id }}"/>
+                                </label>
+
+                           {% endfor %}
+                           <br><input type="submit" class="btn btn-primary" value="Valider">
+                       </form>
+
+                   </div>
+               {% else %}
+                   {% for carte in maMain %}
+                       <img class="cartes" src="{{ asset('assets/images/objets/'~objets[carte].ObjetImg) }}" alt="" />
+                   {% endfor %}
+               {% endif %}
+
+           </div>
+           <div class="col-2">
+
+           </div>
+       </div>
+       </div>
+   {% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        function refresh() {
+            console.log('test');
+            $.ajax({
+                url: '{{ path('refresh', {'id': partie.id }) }}',
+                method : "POST",
+                success: function(data) {
+                    var id = '{{ connecte.id }}';
+                    console.log(data);
+                    if(data != id){
+                        {% if action_dispo.0.dispo == 0 and action_dispo.1.dispo == 0 and action_dispo.2.dispo == 0 and action_dispo.3.dispo == 0 and choix_paire == 0 and choix_cadeau == 0 and message == null %}
+
+                        {% endif %}
+                    }
+                    if(data == id) {
+                        {% if att_cadeau == 0 or att_paire == 0 and message == null %}
+                            window.location.reload();
+                        {% endif %}
+                    }
+                }
+            });
+        }
+        setInterval(refresh(), 5000);
+    </script>
+
+{% endblock %}

@@ -1,0 +1,68 @@
+{# templates/Partie/mesParties.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Sale Gosse | Mes parties{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/statistiques.css') }}">
+{% endblock %}
+
+{% block body %}
+    <style>
+        table, td, tr {
+            border: 1px solid black;
+            text-align: center;
+        }
+    </style>
+
+    <p class="titre">Mes parties en cours</p>
+    {% if cParties == null %}
+        <p class="text-center">Vous n'avez aucune partie en cours.</p>
+    {% else %}
+        <table class="tab_statistique">
+            <thead>
+                <td>Partie</td>
+                <td>Adversaire</td>
+                <td>Manche</td>
+                <td>Tour</td>
+            </thead>
+            {% for partie in cParties %}
+                <tr>
+                    <td><a style="color: #d99255" href="{{ path('afficher_partie', {'id': partie.id }) }}">Jouer</a></td>
+                    <td>{{ cAdversaire.username }}</td>
+                    <td>{{ partie.partieManche }}</td>
+                    <td>{% if partie.partieTour == partie.partieJ1.id %}{{ partie.partieJ1.username }}{% else %}{{ partie.partieJ2.username }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+    <p class="titre">Mes parties terminées</p>
+    {% if fParties == null %}
+        <p class="text-center">Vous n'avez terminé aucune partie.</p>
+    {% else %}
+        <table class="tab_statistique">
+            <thead>
+                <td>Adversaire</td>
+                <td>Manche</td>
+                <td>Mes points</td>
+                <td>Points adverses</td>
+                <td>Mes objectifs</td>
+                <td>Objectifs adverses</td>
+                <td>Vainqueur</td>
+            </thead>
+            {% for partie in fParties %}
+                <tr>
+                    <td>{{ fAdversaire.username }}</td>
+                    <td>{{ partie.partieManche }}</td>
+                    <td>{% if connecte == partie.partieJ1.id %}{{ partie.partiePointsJ1 }}{% else %}{{ partie.partiePointsJ2 }}{% endif %}</td>
+                    <td>{% if connecte == partie.partieJ1.id %}{{ partie.partiePointsJ2 }}{% else %}{{ partie.partiePointsJ1 }}{% endif %}</td>
+                    <td>{% if connecte == partie.partieJ1.id %}{{ partie.partieNbObjJ1 }}{% else %}{{ partie.partieNbObjJ2 }}{% endif %}</td>
+                    <td>{% if connecte == partie.partieJ1.id %}{{ partie.partieNbObjJ2 }}{% else %}{{ partie.partieNbObjJ1 }}{% endif %}</td>
+                    <td>{% if partie.partieVainqueur == partie.partieJ1.id %}{{ partie.partieJ1.username }}{% else %}{{ partie.partieJ2.username }}{% endif %}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+
+{% endblock %}

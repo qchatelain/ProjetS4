@@ -1,0 +1,18 @@
+{# templates/Mail/mdpMail.html.twig #}
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<h3>Mot de passe oublié</h3>
+
+<p>Bonjour {{ name }},</p>
+
+<p>Voici votre nouveau mot de passe : <b>{{ nMdp }}</b></p>
+
+<p>Pour vous connecter, cliquez juste <a href="{{ url('login') }}">ici</a>.</p>
+
+<p>Merci et bon jeu !</p>
+
+
+<img style="width: 50px" src="{{ absolute_url(asset('assets/images/logo.png')) }}">

@@ -1,0 +1,33 @@
+.titre{
+	color: #da9155;
+	font-weight: bold;
+	font-size: 40px;
+	text-transform: uppercase;
+	text-align: center;
+}
+
+.tab_statistique{
+	margin: auto;
+	width: 60vw;
+	background-color: #333333;
+	color: white;
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 85px;
+}
+.tab_statistique thead{
+	color: #da9155 !important;
+	font-weight: bold;
+	background-color: #ffffff2e;
+}
+
+.tab_statistique tr{
+	height: 80px;
+}
+.ligne_stat:hover{
+	background-color: #6e98595e;
+}
+
+.ligne_moi {
+	background-color: #6e98595e;
+}

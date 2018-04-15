@@ -17,7 +17,7 @@ class Chat
     private $id;
 
     /**
-     * @ORM\Column(type="time", name="chat_time")
+     * @ORM\Column(type="datetime", name="chat_time")
      */
     private $chatTime;
 

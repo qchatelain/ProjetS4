@@ -32,6 +32,11 @@ class Objectif
     private $objectifImg;
 
     /**
+     * @ORM\Column(type="string", name="objectif_pion")
+     */
+    private $objectifPion;
+
+    /**
      * @return mixed
      */
     public function getId()
@@ -94,4 +99,21 @@ class Objectif
     {
         $this->objectifImg = $objectifImg;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getObjectifPion()
+    {
+        return $this->objectifPion;
+    }
+
+    /**
+     * @param mixed $objectifPion
+     */
+    public function setObjectifPion($objectifPion)
+    {
+        $this->objectifPion = $objectifPion;
+    }
+
 }

@@ -1,0 +1,33 @@
+{# templates/Security/login.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Sale Gosse | Connexion{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/inscription_connexion.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <div class="formulaires">
+        <img src="{{ asset('assets/images/case12.png') }}" class="image_co_ins" alt="Sale Gosse">
+        <!-- CONNEXION -->
+        <p class="titre_co_ins">Connexion</p>
+        <form action="{{ path('login') }}" method="post" class="inscription" accept-charset="utf-8">
+            <div class='error_msg'>
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {{ error.messageKey }}
+                    </div>
+                {% endif %}</div>
+            <br>
+            <input type="text" placeholder="Pseudo" name="_username" x  class="champ" value="{{ last_username }}" /><br/><br/>
+            <input type="password" placeholder="Mot de passe" name="_password" class="champ" /><br/><br/>
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"/>
+            <input type="submit" name="submit" class="submit" value="Se connecter"  /><br>
+        </form>
+        <a href="{{ path('register') }}" class="lien_inscrit">Pas encore inscrit ?</a>
+    </div>
+
+{% endblock %}

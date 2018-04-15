@@ -1,0 +1,101 @@
+{# templates/User/compte.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Sale Gosse | Modifier mon profil{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/inscription_connexion.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <style>
+        .actif {
+            border: 1px white solid;
+        }
+    </style>
+    <div class="formulaires modif_profil">
+        <img src="{{ asset('assets/images/case12.png') }}" class="image_co_ins" alt="Sale Gosse" style="width: 650px!important;">
+        <!-- CONNEXION -->
+        <p class="titre_co_ins">Modifier mon<br> profil</p>
+        <form name="user" method="post" class="inscription" accept-charset="utf-8">
+            <div class='error_msg'>
+                {{ form_errors(form.username) }}
+                {{ form_errors(form.email) }}
+                {{ form_errors(form.password.first) }}
+                {{ form_errors(form.password.second) }}
+            </div>
+            <br>
+            <div class="profil">
+                <h2>Pseudo</h2>
+                <div class="separation"></div>
+                <input type="text" placeholder="Pseudo" name="user[username]" value="{{ user.username }}" required class="champ champ_gauche"  />
+            </div>
+            <div class="mdp">
+                <h2>Email</h2>
+                <div class="separation_mdp"></div>
+                <input type="email" placeholder="Email" name="user[email]" value="{{ user.email }}" required class="champ" />
+            </div>
+            <div class="prenom">
+                <h2>Mdp</h2>
+                <div class="separation"></div>
+                <input type="password" placeholder="Mot de passe" name="user[password][first]" required class="champ champ_gauche" />
+            </div>
+            <div class="nom">
+                <h2 style="width: 200px; margin-left: -35px">Conf. mdp</h2>
+                <div class="separation"></div>
+                <input type="password" placeholder="Confirmation mot de passe" name="user[password][second]" required class="champ champ_gauche" />
+            </div>
+            <div class="prenom">
+                <h2>Prénom</h2>
+                <div class="separation"></div>
+                <input type="text" placeholder="Prénom" name="user[userPrenom]" value="{{ user.userPrenom }}" required class="champ champ_gauche"  />
+            </div>
+            <div class="nom">
+                <h2>Nom</h2>
+                <div class="separation"></div>
+                <input type="text" placeholder="Nom" name="user[userNom]" value="{{ user.userNom }}" required class="champ champ_gauche" />
+            </div>
+            <div class="conteneur_avatar">
+                <h2>Avatar</h2>
+                <div class="separation" style="margin-bottom: 20px;"></div>
+                <p>Sélectionnez votre avatar</p>
+                <div class="avatars">
+                    <label for="avatar1"><img src="{{ asset('assets/images/avatar/avatar1.png') }}" class="avatar pascheck" alt="avatar1.png"></label>
+                    <label for="avatar2"><img src="{{ asset('assets/images/avatar/avatar2.png') }}" class="avatar pascheck" alt="avatar2.png"></label>
+                    <label for="avatar3"><img src="{{ asset('assets/images/avatar/avatar3.png') }}" class="avatar pascheck" alt="avatar3.png"></label>
+                    <label for="avatar4"><img src="{{ asset('assets/images/avatar/avatar4.png') }}" class="avatar pascheck" alt="avatar4.png"></label>
+                    <input type="hidden" name="user[userAvatar]" value="{{ user.userAvatar }}" id="check_avatar">
+                </div>
+            </div>
+            <br>
+            <input type="submit" name="submit" class="submit" value="Modifier"  />
+            <input type="hidden" name="user[_token]" value="{{ form._token.vars.value }}" />
+            <br/>
+        </form>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+
+    <script>
+
+        $(document).ready(function () {
+
+            $('.avatar').click(function () {
+                var actif = document.getElementsByClassName("actif");
+                $(actif).removeClass("actif");
+
+                $(this).addClass("actif");
+                var id = $(".actif").attr("alt");
+                if ($(".actif").hasClass("pascheck")) {
+                    var check = document.getElementsByClassName("check");
+                    $(check).removeClass("check").addClass("pascheck");
+                    $("#check_avatar").val(id);
+                    $(".actif").removeClass("pascheck").addClass("check");
+                }
+            });
+        });
+    </script>
+
+{% endblock %}

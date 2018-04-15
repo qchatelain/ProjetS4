@@ -3,11 +3,16 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(fields="email", message="Email déjà pris")
+ * @UniqueEntity(fields="username", message="Pseudo déjà pris")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -18,53 +23,69 @@ class User
 
     /**
      * @ORM\Column(type="string", name="user_nom")
+     * @Assert\NotBlank()
      */
     private $userNom;
 
     /**
      * @ORM\Column(type="string", name="user_prenom")
+     * @Assert\NotBlank()
      */
     private $userPrenom;
 
     /**
-     * @ORM\Column(type="string", name="user_mail")
+     * @ORM\Column(type="string", name="user_mail", unique=true)
+     * @Assert\NotBlank()
+     * @Assert\Email()
      */
-    private $userMail;
+    private $email;
 
     /**
-     * @ORM\Column(type="string", name="user_pseudo")
+     * @ORM\Column(type="string", name="user_pseudo", unique=true)
+     * @Assert\NotBlank()
      */
-    private $userPseudo;
+    private $username;
 
     /**
      * @ORM\Column(type="string", name="user_mdp")
+     * @Assert\NotBlank()
      */
-    private $userMdp;
+    private $password;
 
     /**
-     * @ORM\Column(type="datetime", name="user_dateInscription")
+     * @ORM\Column(type="text", name="user_roles")
+     */
+    private $roles = [];
+
+    /**
+     * @ORM\Column(type="datetime", name="user_dateInscription", nullable=true)
      */
     private $userDateInscription;
 
     /**
      * @ORM\Column(type="integer", name="user_nbVictoire")
      */
-    private $userNbVictoire;
+    private $userNbVictoire = 0;
 
     /**
      * @ORM\Column(type="integer", name="user_nbPartie")
      */
-    private $userNbPartie;
+    private $userNbPartie = 0;
 
     /**
      * @ORM\Column(type="string", name="user_avatar")
      */
-    private $userAvatar;
+    private $userAvatar = "";
 
     /**
      * @ORM\Column(type="string", name="user_titre")
      */
-    private $userTitre;
+    private $userTitre = "";
+
+    /**
+     * @ORM\Column(type="integer", name="user_ban")
+     */
+    private $userBan = 0;
 
     /**
      * @return mixed
@@ -114,52 +135,56 @@ class User
         $this->userPrenom = $userPrenom;
     }
 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function setUsername($username): void
+    {
+        $this->username = $username;
+    }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email): void
+    {
+        $this->email = $email;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function setPassword($password): void
+    {
+        $this->password = $password;
+    }
+
     /**
      * @return mixed
      */
-    public function getUserMail()
+    public function getRoles()
     {
-        return $this->userMail;
+        $roles = json_decode($this->roles);
+
+        if (empty($roles)) {
+            $roles[] = 'ROLE_USER';
+        }
+
+        return array_unique($roles);
     }
 
     /**
-     * @param mixed $userMail
+     * @param mixed $roles
      */
-    public function setUserMail($userMail)
+    public function setRoles($roles)
     {
-        $this->userMail = $userMail;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserPseudo()
-    {
-        return $this->userPseudo;
-    }
-
-    /**
-     * @param mixed $userPseudo
-     */
-    public function setUserPseudo($userPseudo)
-    {
-        $this->userPseudo = $userPseudo;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getUserMdp()
-    {
-        return $this->userMdp;
-    }
-
-    /**
-     * @param mixed $userMdp
-     */
-    public function setUserMdp($userMdp)
-    {
-        $this->userMdp = $userMdp;
+        $this->roles = json_encode($roles);
     }
 
     /**
@@ -240,5 +265,63 @@ class User
     public function setUserTitre($userTitre)
     {
         $this->userTitre = $userTitre;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUserBan()
+    {
+        return $this->userBan;
+    }
+
+    /**
+     * @param mixed $userBan
+     */
+    public function setUserBan($userBan)
+    {
+        $this->userBan = $userBan;
+    }
+
+    /**
+     * Retour le salt qui a servi à coder le mot de passe
+     *
+     * {@inheritdoc}
+     */
+    public function getSalt()
+    {
+        // See "Do you need to use a Salt?" at https://symfony.com/doc/current/cookbook/security/entity_provider.html
+        // we're using bcrypt in security.yml to encode the password, so
+        // the salt value is built-in and you don't have to generate one
+
+        return null;
+    }
+
+    /**
+     * Removes sensitive data from the user.
+     *
+     * {@inheritdoc}
+     */
+    public function eraseCredentials()
+    {
+        // Nous n'avons pas besoin de cette methode car nous n'utilions pas de plainPassword
+        // Mais elle est obligatoire car comprise dans l'interface UserInterface
+        // $this->plainPassword = null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function serialize()
+    {
+        return serialize([$this->id, $this->userPseudo, $this->userMdp]);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize($serialized)
+    {
+        [$this->id, $this->userPseudo, $this->userMdp] = unserialize($serialized, ['allowed_classes' => false]);
     }
 }

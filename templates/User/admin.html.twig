@@ -1,0 +1,56 @@
+{# templates/User/admin.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Sale Gosse | Administration{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('assets/css/statistiques.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <style>
+        .bloquer {
+            color: red;
+        }
+
+        .debloquer {
+            color: green;
+        }
+
+        .bloquer:hover {
+            color: red;
+        }
+
+        .debloquer:hover {
+            color: green;
+        }
+    </style>
+    <p class="titre">Administration</p>
+    <table class="tab_statistique">
+        <thead>
+            <td>Id</td>
+            <td>Pseudo</td>
+            <td>Email</td>
+            <td>Nb de victoires</td>
+            <td>Nb de parties</td>
+            <td>État</td>
+        </thead>
+        {% for joueur in joueurs %}
+            <tr class="ligne_stat">
+                <td>{{ joueur.id }}</td>
+                <td>{{ joueur.username }}</td>
+                <td>{{ joueur.email }}</td>
+                <td>{{ joueur.userNbVictoire }}</td>
+                <td>{{ joueur.userNbPartie }}</td>
+                <td>{% if joueur.userBan == 0 %}
+                        <a href="{{ path('etat', {'id': joueur.id }) }}" class="lien bloquer">Bloquer</a>
+                    {% else %}
+                        <a href="{{ path('etat', {'id': joueur.id }) }}" class="lien debloquer">Débloquer</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+
+{% endblock %}

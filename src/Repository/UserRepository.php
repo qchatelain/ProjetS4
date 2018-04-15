@@ -31,4 +31,26 @@ class UserRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function findNotEqualId($value)
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.id != :value')
+            ->andWhere('u.username != :admin')
+            ->setParameter('value', $value)
+            ->setParameter('admin', 'admin')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findClassement()
+    {
+        return $this->createQueryBuilder('u')
+            ->where('u.username != :admin')
+            ->setParameter('admin', 'admin')
+            ->orderBy('u.userNbVictoire', 'DESC')
+            ->addOrderBy('u.userNbPartie', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

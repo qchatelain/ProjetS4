@@ -1,0 +1,102 @@
+/*image*/
+.image_co_ins{
+/*  display: block;
+  margin: auto;
+*/  width: 530px;
+}
+
+a:hover{
+  color: #da9155 !important;
+}
+
+/*Textes*/
+.titre_co_ins{
+  color: #da9155;
+  font-weight: bold;
+  font-size: 40px;
+  margin: -40px 0 20px 25px;
+  padding-top: 10px;
+  text-transform: uppercase;
+}
+/*Formulaires*/
+.formulaires{
+  width: 530px;
+  margin: auto;
+  background-color: #3E3E3E;
+  box-shadow: 0 0 17px 0px #939393;
+  margin-bottom: 125px;
+  margin-top: 50px;
+  padding-bottom: 10px;
+}
+.inscription{
+  text-align: center;
+  padding-bottom: 35px;
+}
+.titre_champ{
+  color: white;
+}
+.champ{ 
+  height: 40px;
+  width: 200px;
+  border-radius: 100px;
+  border-width: 0px;
+  text-align: center;
+  background: #da9155b3;
+  color: white;
+}
+.champ::placeholder{
+    color: #ffffff5c;
+}
+
+input:focus {
+  outline: none;
+}
+
+.submit{
+  height: 40px;
+  width: 150px;
+  border-radius: 100px;
+  border-width: 0px;
+  text-align: center;
+  background: white;
+  color: #da9155;
+}
+.submit:hover{
+  /*font-weight: bold;*/
+  background-color: #da9155;
+  color: white;
+  cursor: pointer;
+}
+.mdp_oublie{
+  color: white;
+  font-size: 10px;
+}
+
+.lien_inscrit {
+  color: #da9155;
+  display: block;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.error_msg {
+  width: 50%;
+  margin: auto;
+}
+
+select {
+  text-align: center;
+  width: 300px;
+  border: solid;
+  margin: auto;
+  border-radius: 50px;
+  height: 150px;
+  background-color: #da9155;
+  border-color: white;
+  color: white;
+  text-align-last:center;
+  overflow: auto;
+}
+option {
+  text-align: center;
+}

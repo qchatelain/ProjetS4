@@ -2,29 +2,112 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Hanamokoji{% endblock %}</title>
+        <title>{% block title %}Sale Gosse{% endblock %}</title>
 
-        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('assets/favicon/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/favicon/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ asset('assets/favicon/site.webmanifest') }}">
+        <link rel="mask-icon" href="{{ asset('assets/favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap/bootstrap.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('assets/css/style.css') }}">
+        <!-- Style animation scroll -->
+        <link rel="stylesheet" href="{{ asset('assets/css/accordion/accordion.css') }}">
+        <!-- Animation travaux -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+        <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+        <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Montserrat'>
         {% block stylesheets %}{% endblock %}
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Hanamokoji</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav">
-                    <a class="nav-item nav-link active" href="{{ path('user_profil') }}">Mon profil<span class="sr-only">(current)</span></a>
-                    <a class="nav-item nav-link" href="{{ path('nouvelle_partie') }}">Mes parties</a>
-                    <a class="nav-item nav-link" href="{{ path('user_classement') }}">Mon classement</a>
-                </div>
-            </div>
-        </nav>
-        {% block body %}{% endblock %}
+    <body style="background-color: #e5e6e0 !important">
 
-        <script type="text/javascript" src="{{ asset('assets/js/jquery-3.3.1.min.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    <div style="min-height: 70vh">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{ path('accueil') }}"><img alt="Sale Goss" class="logo_nav" src="{{ asset('assets/images/logo.png') }}"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                {% if is_granted('ROLE_USER') %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin') }}">Admin</a>
+                        </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('profil') }}">Jouer</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('compte') }}">Profil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('mesparties') }}">Mes parties</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('classement') }}">Classement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('logout') }}"><img class="bouton_co" alt="deconnexion" src="{{ asset('assets/images/connexion.svg') }}"></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('accueil') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('regles') }}">Règles</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('login') }}">Connexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('register') }}">Inscription</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+        {% block body %}{% endblock %}
+    </div>
+    {% block footer %}
+    <div class="row footer">
+        <div class="item_footer offset-md-3 col-md-2">
+            <p class="plan_site">Plan du site</p>
+            <a class="lien_footer" href="{{ path('accueil') }}">Accueil</a>
+            <br>
+            <a class="lien_footer" href="{{ path('regles') }}">Règles du jeu</a>
+            <br>
+            <a class="lien_footer" href="{{ path('login') }}">Connexion</a>
+            <br>
+            <a class="lien_footer" href="{{ path('register') }}">Inscription</a>
+        </div>
+        <div class="offset-md-2 col-md-2">
+            <img alt="Sale gosse" src="{{ asset('assets/images/logo.png') }}" class="logo_footer">
+        </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-12">
+            <p style="color: white; text-align: center;">2018 © Agence Webdream - <a style="color: #d99255" href="http://89.234.183.171/promo/">Site promo</a></p>
+        </div>
+    </div>
+    {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="{{ asset('assets/js/bootstrap/bootstrap.js') }}"></script>
+
+    <!-- Script animation scroll -->
+    <!-- <script src="js/accordion.js"></script> -->
+    <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <!-- Script Accordion -->
+    <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+    <script src="{{ asset('assets/js/accordion/accordion.js') }}"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>

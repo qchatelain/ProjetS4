@@ -37,37 +37,37 @@ class Partie
     private $partieCarteEcart;
 
     /**
-     * @ORM\Column(type="json", name="partie_mainJ1")
+     * @ORM\Column(type="text", name="partie_mainJ1")
      */
     private $partieMainJ1;
 
     /**
-     * @ORM\Column(type="json", name="partie_mainJ2")
+     * @ORM\Column(type="text", name="partie_mainJ2")
      */
     private $partieMainJ2;
 
     /**
-     * @ORM\Column(type="json", name="partie_pioche")
+     * @ORM\Column(type="text", name="partie_pioche")
      */
     private $partiePioche;
 
     /**
-     * @ORM\Column(type="json", name="partie_terrainJ1", nullable=true)
+     * @ORM\Column(type="text", name="partie_terrainJ1", nullable=true)
      */
     private $partieTerrainJ1;
 
     /**
-     * @ORM\Column(type="json", name="partie_terrainJ2", nullable=true)
+     * @ORM\Column(type="text", name="partie_terrainJ2", nullable=true)
      */
     private $partieTerrainJ2;
 
     /**
-     * @ORM\Column(type="json", name="partie_actionsJ1", nullable=true)
+     * @ORM\Column(type="text", name="partie_actionsJ1", nullable=true)
      */
     private $partieActionsJ1;
 
     /**
-     * @ORM\Column(type="json", name="partie_actionsJ2", nullable=true)
+     * @ORM\Column(type="text", name="partie_actionsJ2", nullable=true)
      */
     private $partieActionsJ2;
 
@@ -82,7 +82,7 @@ class Partie
     private $partieManche = 1;
 
     /**
-     * @ORM\Column(type="json", name="partie_objectifs", nullable=true)
+     * @ORM\Column(type="text", name="partie_objectifs", nullable=true)
      */
     private $partieObjectifs;
 
@@ -105,6 +105,11 @@ class Partie
      * @ORM\Column(type="integer", name="partie_nbObjJ2")
      */
     private $partieNbObjJ2 = 0;
+
+    /**
+     * @ORM\Column(type="integer", name="partie_vainqueur")
+     */
+    private $partieVainqueur = 0;
 
     /**
      * @return mixed
@@ -239,7 +244,7 @@ class Partie
      */
     public function getPartieTerrainJ1()
     {
-        return  json_decode($this->partieTerrainJ1);
+        return  json_decode($this->partieTerrainJ1, true);
     }
 
     /**
@@ -255,7 +260,7 @@ class Partie
      */
     public function getPartieTerrainJ2()
     {
-        return json_decode($this->partieTerrainJ2);
+        return json_decode($this->partieTerrainJ2, true);
     }
 
     /**
@@ -271,7 +276,7 @@ class Partie
      */
     public function getPartieActionsJ1()
     {
-        return json_decode($this->partieActionsJ1);
+        return json_decode($this->partieActionsJ1, true);
     }
 
     /**
@@ -287,7 +292,7 @@ class Partie
      */
     public function getPartieActionsJ2()
     {
-        return json_decode($this->partieActionsJ2);
+        return json_decode($this->partieActionsJ2, true);
     }
 
     /**
@@ -335,7 +340,7 @@ class Partie
      */
     public function getPartieObjectifs()
     {
-        return json_decode($this->partieObjectifs);
+        return json_decode($this->partieObjectifs, true);
     }
 
     /**
@@ -408,5 +413,21 @@ class Partie
     public function setPartieNbObjJ2($partieNbObjJ2)
     {
         $this->partieNbObjJ2 = $partieNbObjJ2;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPartieVainqueur()
+    {
+        return $this->partieVainqueur;
+    }
+
+    /**
+     * @param mixed $partieVainqueur
+     */
+    public function setPartieVainqueur($partieVainqueur)
+    {
+        $this->partieVainqueur = $partieVainqueur;
     }
 }
